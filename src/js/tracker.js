@@ -874,6 +874,27 @@
 		}
 
 		/**
+		 * Initialize new `pageViewId` if it shouldn't be preserved.
+		 * Should be called when `trackPageView` is invoked
+		 */
+		function resetPageView() {
+			if (!preservePageViewId || mutSnowplowState.pageViewId == null) {
+				mutSnowplowState.pageViewId = uuid.v4();
+			}
+		}
+
+		/**
+		 * Safe function to get `pageViewId`.
+		 * Generates it if it wasn't initialized by other tracker
+		 */
+		function getPageViewId() {
+			if (mutSnowplowState.pageViewId == null) {
+				mutSnowplowState.pageViewId = uuid.v4();
+			}
+			return mutSnowplowState.pageViewId
+		}
+
+		/**
 		 * Put together a web page context with a unique UUID for the page view
 		 *
 		 * @return object web_page context
